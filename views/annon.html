@@ -1,0 +1,162 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+        .announcement-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .announcement-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+        .announcement-card:hover {
+            transform: translateY(-5px);
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="announcement-container" id="announcementContainer">
+    <!-- 公告卡片将动态生成 -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // 默认示例数据
+        const defaultData = [
+            {
+                name: "币安",
+                online: [
+                    {currency: "BTC", time: "2023-10-01", type: "现货"},
+                    {currency: "ETH", time: "2023-10-01", type: "现货"}
+                ],
+                offline: [
+                    {currency: "LTC", time: "2023-10-01", type: "现货"}
+                ],
+                leverageAdjust: [
+                    {currency: "XRP", oldLeverage: "5x", newLeverage: "10x"}
+                ]
+            },
+            {
+                name: "Bybit",
+                online: [
+                    {currency: "BTC", time: "2023-10-01", type: "现货"},
+                    {currency: "ETH", time: "2023-10-01", type: "现货"}
+                ],
+                offline: [
+                    {currency: "LTC", time: "2023-10-01", type: "现货"}
+                ],
+                leverageAdjust: [
+                    {currency: "XRP", oldLeverage: "5x", newLeverage: "10x"}
+                ]
+            },
+            {
+                name: "Bitget",
+                online: [
+                    {currency: "BTC", time: "2023-10-01", type: "现货"},
+                    {currency: "ETH", time: "2023-10-01", type: "现货"}
+                ],
+                offline: [
+                    {currency: "LTC", time: "2023-10-01", type: "现货"}
+                ],
+                leverageAdjust: [
+                    {currency: "XRP", oldLeverage: "5x", newLeverage: "10x"}
+                ]
+            },
+            {
+                name: "殴易",
+                online: [
+                    {currency: "BTC", time: "2023-10-01", type: "现货"},
+                    {currency: "ETH", time: "2023-10-01", type: "现货"}
+                ],
+                offline: [
+                    {currency: "LTC", time: "2023-10-01", type: "现货"}
+                ],
+                leverageAdjust: [
+                    {currency: "XRP", oldLeverage: "5x", newLeverage: "10x"}
+                ]
+            },
+            {
+                name: "Gate",
+                online: [
+                    {currency: "BTC", time: "2023-10-01", type: "现货"},
+                    {currency: "ETH", time: "2023-10-01", type: "现货"}
+                ],
+                offline: [
+                    {currency: "LTC", time: "2023-10-01", type: "现货"}
+                ],
+                leverageAdjust: [
+                    {currency: "XRP", oldLeverage: "5x", newLeverage: "10x"}
+                ]
+            },
+            // 其他交易所数据...
+        ];
+
+        // 模拟从后端获取数据
+        function fetchData() {
+            return new Promise((resolve, reject) => {
+                // 这里可以替换为实际的AJAX请求
+                setTimeout(() => {
+                    if (Math.random() > 0.5) {
+                        resolve(defaultData); // 模拟成功
+                    } else {
+                        reject("数据获取失败");
+                    }
+                }, 1000);
+            });
+        }
+
+        // 渲染公告栏
+        function renderAnnouncements(data) {
+            const container = $("#announcementContainer");
+            container.empty(); // 清空容器
+
+            data.forEach(exchange => {
+                const card = $(`
+                    <div class="announcement-card">
+                        <h3>${exchange.name}</h3>
+                        <div><strong>上线</strong></div>
+                        ${exchange.online.map(item => `
+                            <div>货币: ${item.currency}, 时间: ${item.time}, 类型: ${item.type}</div>
+                        `).join('')}
+                        <div><strong>下线</strong></div>
+                        ${exchange.offline.map(item => `
+                            <div>货币: ${item.currency}, 时间: ${item.time}, 类型: ${item.type}</div>
+                        `).join('')}
+                        <div><strong>杠杆调整</strong></div>
+                        ${exchange.leverageAdjust.map(item => `
+                            <div>货币: ${item.currency}, 原杠杆: ${item.oldLeverage}, 现杠杆: ${item.newLeverage}</div>
+                        `).join('')}
+                    </div>
+                `);
+                container.append(card);
+            });
+        }
+
+        // 初始化数据
+        fetchData()
+            .then(data => renderAnnouncements(data))
+            .catch(err => {
+                console.error(err);
+                renderAnnouncements(defaultData); // 使用默认数据
+            });
+    });
+</script>
+</body>

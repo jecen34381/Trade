@@ -1,0 +1,82 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="layui-container" style="margin-top: 20px;">
+    <form class="layui-form" id="notificationForm">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知方式</label>
+            <div class="layui-input-block">
+                <select id="notificationMethod" name="notificationMethod" lay-filter="notificationMethod">
+                    <option value="">请选择通知方式</option>
+                    <option value="phone">手机号</option>
+                    <option value="email">邮箱</option>
+                    <option value="tg">TG</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系方式</label>
+            <div class="layui-input-block">
+                <input type="text" id="contactInput" name="contact" placeholder="请输入联系方式" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">信息类型</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="infoType" lay-skin="primary" title="公告" value="announcement">
+                <input type="checkbox" name="infoType" lay-skin="primary" title="行情" value="market">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn">提交</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.all.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form;
+        var $ = layui.$;
+
+        // 监听通知方式的选择
+        form.on('select(notificationMethod)', function(data){
+            var method = data.value;
+            var placeholder = '';
+
+            switch(method) {
+                case 'phone':
+                    placeholder = '请输入手机号';
+                    break;
+                case 'email':
+                    placeholder = '请输入邮箱';
+                    break;
+                case 'tg':
+                    placeholder = '请输入TG账号';
+                    break;
+                default:
+                    placeholder = '请输入联系方式';
+            }
+
+            $('#contactInput').attr('placeholder', placeholder);
+        });
+
+        // 监听表单提交
+        form.on('submit', function(data){
+            console.log(data.field); // 提交表单后，输出表单数据
+            return false; // 阻止表单提交
+        });
+    });
+</script>
+
+</body>

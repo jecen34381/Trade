@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ae249665-d667-4010-98af-10f989a9b9be" name="47.98.6.83">
+        <fileTransfer rootFolder="/home/zhangyonghe/jcd" accessType="SFTP" host="47.95.6.83" port="22" sshConfigId="70845c58-f9e4-4b47-a50c-6e3c84b4a817" sshConfig="root@47.95.6.83:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.min.css">
+    <script src="https://cdn.staticfile.org/layui/2.5.6/layui.min.js"></script>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md4">
+                <label class="layui-form-label">交易对</label>
+                <div class="layui-input-block">
+                    <input type="text" id="symbol" class="layui-input" placeholder="BTC_USDT">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" id="from" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-block">
+                    <input type="text" id="to" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+              <label class="layui-form-label">订单ID</label>
+              <div class="layui-input-block">
+                  <input type="text" id="id" class="layui-input">
+              </div>
+          </div>
+        </div>
+        <div class="layui-row">
+            <button class="layui-btn" onclick="queryTrades()">查询</button>
+        </div>
+        <div class="layui-row" id="result">
+        
+        </div>
+    </div>
+    
+    <script>
+        function queryTrades() {
+            var symbol = document.getElementById("symbol").value;
+            var from = document.getElementById("from").value;
+            var to = document.getElementById("to").value;
+            var ID = document.getElementById("id").value;
+            var url = "http://localhost:8080/trades?contract=" + symbol + "&to=" + to;
+            
+            layui.use('jquery', function(){
+                var $ = layui.jquery;
+                
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var resultDiv = document.getElementById("result");
+                        resultDiv.innerHTML = "";
+                        
+                        var table = document.createElement("table");
+                        table.classList.add("layui-table");
+                        
+                        var thead = document.createElement("thead");
+                        var tr = document.createElement("tr");
+                        
+                        var thId = document.createElement("th");
+                        thId.innerHTML = "ID";
+                        tr.appendChild(thId);
+                        
+                        var thContract = document.createElement("th");
+                        thContract.innerHTML = "Contract";
+                        tr.appendChild(thContract);
+                        
+                        var thCreateTime = document.createElement("th");
+                        thCreateTime.innerHTML = "Create Time";
+                        tr.appendChild(thCreateTime);
+                        var thSize = document.createElement("th");
+                        thSize.innerHTML = "Size";
+                        tr.appendChild(thSize);
+                        
+                        var thPrice = document.createElement("th");
+                        thPrice.innerHTML = "Price";
+                        tr.appendChild(thPrice);
+                        
+                        thead.appendChild(tr);
+                        table.appendChild(thead);
+                        
+                        var tbody = document.createElement("tbody");
+                        
+                        for (var i = 0; i < data.length; i++) {
+                            var trade = data[i];
+                            var id = trade.id;
+                            var contract = trade.contract;
+                            var createTime = trade.create_time;
+                            var size = trade.size;
+                            var price = trade.price;
+                            
+                            var tr = document.createElement("tr");
+                            
+                            var tdId = document.createElement("td");
+                            tdId.innerHTML = id;
+                            tr.appendChild(tdId);
+                            
+                            var tdContract = document.createElement("td");
+                            tdContract.innerHTML = contract;
+                            tr.appendChild(tdContract);
+                            
+                            var tdCreateTime = document.createElement("td");
+                            tdCreateTime.innerHTML = createTime;
+                            tr.appendChild(tdCreateTime);
+                            
+                            var tdSize = document.createElement("td");
+                            tdSize.innerHTML = size;
+                            tr.appendChild(tdSize);
+                            
+                            var tdPrice = document.createElement("td");
+                            tdPrice.innerHTML = price;
+                            tr.appendChild(tdPrice);
+                            console.log(id.toString(), ID)
+                            if (id.toString() === ID) {
+                              console.log("指定的ID标记为黄色")
+                                tr.style.backgroundColor = "yellow";
+                            }
+                            
+                            tbody.appendChild(tr);
+                        }
+                        
+                        table.appendChild(tbody);
+                        resultDiv.appendChild(table);
+                    },
+                    error: function() {
+                        console.log("Error occurred while querying trades.");
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
