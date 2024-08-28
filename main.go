@@ -10,9 +10,9 @@ import (
 func init() {
 	// 注册数据库
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", "zhangyonghe:@tcp(47.95.6.83:33061)/jcd?charset=utf8")
+	orm.RegisterDataBase("default", "mysql", "zhangyonghe:@tcp(47.95.6.83:33061)/jcd?charset=utf8mb4")
 	// 自动创建表
-	//orm.RunSyncdb("default", true, true)
+	orm.RunSyncdb("default", false, true)
 }
 
 func main() {

@@ -12,7 +12,7 @@
       <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="3" parent="1" name="jcd">
-      <Collation>latin1_swedish_ci</Collation>
+      <Collation>utf8mb4_unicode_ci</Collation>
     </schema>
     <schema id="4" parent="1" name="mysql">
       <Collation>latin1_swedish_ci</Collation>
@@ -915,7 +915,9 @@
     <view id="288" parent="2" name="VIEWS">
       <System>1</System>
     </view>
-    <table id="289" parent="3" name="annon"/>
+    <table id="289" parent="3" name="annon">
+      <Collation>latin1_swedish_ci</Collation>
+    </table>
     <table id="290" parent="3" name="user"/>
     <column id="291" parent="230" name="CHARACTER_SET_NAME">
       <Position>1</Position>
@@ -3694,25 +3696,27 @@
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="884" parent="290" name="Id">
+    <column id="884" parent="290" name="id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="885" parent="290" name="Username">
+    <column id="885" parent="290" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="886" parent="290" name="Password">
+    <column id="886" parent="290" name="age">
       <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>0</DefaultExpression>
     </column>
     <key id="887" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>Id</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

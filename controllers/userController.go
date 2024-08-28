@@ -12,15 +12,22 @@ type UserController struct {
 }
 
 func (c *UserController) Get() {
-	fmt.Println("查询USER数据.")
+	// 创建一个新的用户
 	o := orm.NewOrm()
-	var users []models.User
-	_, err := o.QueryTable("user").All(&users)
+	user := models.User{Name: "张三", Age: 30}
+	_, err := o.Insert(&user)
 	if err != nil {
-		c.Ctx.WriteString("Error: " + err.Error())
-		fmt.Println("查询失败：", err.Error())
-		return
+		fmt.Println("插入失败:", err.Error())
 	}
-	c.Data["json"] = users
-	c.ServeJSON()
+
+	// 查询用户
+	var users []models.User
+	_, err = o.QueryTable("user").All(&users)
+	if err != nil {
+		fmt.Println("查询失败:", err.Error())
+	}
+
+	fmt.Println(users[0].Name)
+
+	c.Ctx.WriteString(users[0].Name)
 }

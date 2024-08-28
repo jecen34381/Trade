@@ -1,13 +1,11 @@
 package models
 
-import (
-	"github.com/astaxie/beego/orm"
-)
+import "github.com/beego/beego/v2/client/orm"
 
 type User struct {
-	Id       int
-	Username string `orm:"size(100)"`
-	Password string `orm:"size(100)"`
+	Id   int64  `orm:"auto"` // 自增ID
+	Name string `orm:"size(100)"`
+	Age  int
 }
 
 func init() {
